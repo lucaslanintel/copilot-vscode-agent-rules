@@ -54,7 +54,7 @@ Global install (`-Mode Global`/`All`) asks for consent before applying to your m
 | `.github/hooks/context-handoff.json` + `scripts/handoff_reminder.py` | **Each project's `.github/hooks/`** | **PreCompact handoff reminder**: when context is nearly full and about to compact, reminds you to write `HANDOFF` + `/resume`. |
 
 ### How global preferences install
-`bootstrap.ps1 -Mode Global` copies [user-instructions.md](user-instructions.en.md) to `~/.copilot/instructions`, copies `/init` and `/resume` into the VS Code user prompts folder (global, **so any new project can call `/init`**), and updates VS Code settings. You can also do it manually: Command Palette → **Chat: New Instructions File** → choose **New Instructions (User)** and paste, enable **Settings Sync** with *Prompts and Instructions* checked to sync across machines.
+`bootstrap.ps1 -Mode Global` copies [user-instructions.md](user-instructions.md) to `~/.copilot/instructions`, copies `/init` and `/resume` into the VS Code user prompts folder (global, **so any new project can call `/init`**), and updates VS Code settings. You can also do it manually: Command Palette → **Chat: New Instructions File** → choose **New Instructions (User)** and paste, enable **Settings Sync** with *Prompts and Instructions* checked to sync across machines.
 
 ---
 

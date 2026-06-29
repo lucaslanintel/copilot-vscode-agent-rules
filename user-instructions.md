@@ -1,29 +1,29 @@
-# 個人全域偏好(使用者層 / 跨專案)
+# Personal global preferences (user layer / cross-project)
 
-> 這是「跨所有專案」的個人偏好(使用者層)。
-> 安裝為 **VS Code 使用者層 instructions**(見 README),這樣不必每個 repo 複製就全域生效。
-> 每個專案專屬的規則放各 repo 的 `AGENTS.md`;此檔只放跨專案的個人風格。
+> This is personal, cross-project preferences (user layer).
+> Install as **VS Code user-layer instructions** (see README) so it applies globally without copying into every repo.
+> Project-specific rules go in each repo's `AGENTS.md`; this file holds only cross-project personal style.
 
-> 語言:**繁體中文** | [English](user-instructions.en.md)
+> Language: **English** | [繁體中文](user-instructions.zh-TW.md)
 
-## 溝通
-- 一律用**繁體中文**回答與寫 commit message。
-- 做決策前先給我**選項 + 取捨**讓我拍板,不要默默選一個。
-- 重大改動 / 寫檔前先讓我確認再動手。
+## Communication
+- Always reply and write commit messages in **Traditional Chinese**.
+- Before deciding, give me **options + trade-offs** to sign off on; don't silently pick one.
+- Confirm with me before major changes / writing files.
 
-## 程式碼
-- 註解 / docstring 跟隨各專案既有語言慣例(本機多數專案為繁中)。
-- 比照程式庫既有風格與慣例,即使你不同意;真心覺得有害再提出,不私自分叉。
+## Code
+- Comments / docstrings follow each project's existing language convention (most local projects: Traditional Chinese).
+- Match the codebase's existing style and conventions even if you disagree; raise it only if genuinely harmful, don't fork on your own.
 
-## 工作流(通則)
-- 新 session 一開始先讀該專案的 `AGENTS.md` 與 `docs/architecture.md`,
-  全程嚴格遵循既定架構(目錄分工、模組職責、命名、禁止事項),不擅自偏離。
-- 大改分批 commit、可回退;改完跑該專案的測試 / smoke 再回報結果。
-- 秘密(token / 金鑰 / `.env`)永不寫進版控,並主動檢查有沒有外露。
-- 環境 / 設定 / schema 類知識先查官方文件再寫,不要憑記憶(設定寫錯常是靜默失效)。
-- **高風險操作**(刪資料、推遠端、刪檔、碰機密、打外部服務)不要只靠文字規則;
-  能用機器強制就用 hook / permission / 程式內 guard / 測試 / CI / `.gitignore`(對應 Rule 17)。
+## Workflow (general)
+- At the start of a new session, first read the project's `AGENTS.md` and `docs/architecture.md`,
+  and strictly follow the established architecture throughout (directory split, module responsibilities, naming, prohibitions); no deviation.
+- Large changes: commit in batches, reversible; after changes run the project's tests / smoke and report.
+- Secrets (token / key / `.env`) never go into version control; proactively check for leaks.
+- Look up official docs before writing environment / config / schema knowledge — don't rely on memory (config mistakes often fail silently).
+- **High-risk operations** (deleting data, pushing remote, deleting files, touching secrets, hitting external services) shouldn't rely on text rules alone;
+  if it can be machine-enforced, use hook / permission / in-code guard / tests / CI / `.gitignore` (maps to Rule 17).
 
-## Context 交接(對應 Rule 18)
-- context 接近上限時,先把當前任務收到乾淨停點,把目前狀態 + 剩餘計畫寫進 `.handoffs/HANDOFF.md`,
-  再開新對話用 `/resume` 接續。交接要寫到「新對話光靠它就能接手」的程度。
+## Context handoff (maps to Rule 18)
+- Near the limit, bring the current task to a clean stop, write state + remaining plan into `.handoffs/HANDOFF.md`,
+  then open a new chat and resume via `/resume`. Write the handoff well enough that a new chat can take over from it alone.

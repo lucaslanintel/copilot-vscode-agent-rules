@@ -1,28 +1,28 @@
 ---
-description: 在目前專案套用工程規範(AGENTS.md / hooks / prompts),免開終端機
+description: Apply the engineering rules to the current project (AGENTS.md / hooks / prompts), no terminal needed
 agent: agent
-argument-hint: [可選:規範來源 repo 路徑,例如 C:\path\to\copilot-vscode-agent-rules]
+argument-hint: [optional: rules source repo path, e.g. C:\path\to\copilot-vscode-agent-rules]
 ---
 
-你要把這套 VS Code + Copilot 規範安裝到「目前開啟的專案」根目錄。目標:讓專案具備 AGENTS.md、`/resume`、護欄 hook 與架構文件。
+You will install this VS Code + Copilot rules pack into the root of the "currently open project". Goal: give the project AGENTS.md, `/resume`, guardrail hooks, and an architecture doc.
 
-> 語言:**繁體中文** | English: `/init.en`
+> Language: **English** | 繁體中文:`/init.zh-TW`
 
-## 步驟
+## Steps
 
-1. **找規範來源 repo**(含 `scripts/bootstrap.ps1`),依序:
-   - 若使用者用 `${input:額外指示}` 指定了路徑,用它。
-   - 否則找常見位置:`~/copilot-vscode-agent-rules`、`~/copilot-vscode-agent-rules-main`、目前工作區。
-   - 都找不到 → 停下,問使用者來源 repo 在哪,**不要**自己亂猜內容。
+1. **Find the source repo** (containing `scripts/bootstrap.ps1`), in order:
+   - If the user gave a path via `${input:extra}`, use it.
+   - Otherwise look in common spots: `~/copilot-vscode-agent-rules`, `~/copilot-vscode-agent-rules-main`, current workspace.
+   - None found → stop and ask the user where the source repo is; **do not** invent content.
 
-2. **以一鍵腳本安裝到目前專案**(在終端機跑,目標為目前工作區根):
+2. **Install to the current project via the one-click script** (run in terminal, target = current workspace root):
    ```powershell
-   pwsh -ExecutionPolicy Bypass -File <來源repo>\scripts\bootstrap.ps1 -Mode Project -TargetPath .
+   pwsh -ExecutionPolicy Bypass -File <source-repo>\scripts\bootstrap.ps1 -Mode Project -TargetPath .
    ```
-   - 既有檔預設不覆寫;要覆寫才加 `-Force`(會先備份)。
+   - Existing files aren't overwritten by default; add `-Force` to overwrite (backs up first).
 
-3. **驗證**:確認下列都已建立 → `AGENTS.md`、`.github/prompts/resume.prompt.md`、`.github/instructions/guardrails.instructions.md`、`.github/hooks/`、`docs/architecture.md`、`.handoffs/HANDOFF.md`。列出結果給使用者。
+3. **Verify**: confirm all created → `AGENTS.md`, `.github/prompts/resume.prompt.md`, `.github/instructions/guardrails.instructions.md`, `.github/hooks/`, `docs/architecture.md`, `.handoffs/HANDOFF.md`. List results to the user.
 
-4. **若無法執行腳本**(無 PowerShell / 無來源 repo):退而求其次,直接在專案根建立 `AGENTS.md`,內容沿用來源 repo 的 18 條鐵則 + 個人風格;其餘檔案逐一比照建立。
+4. **If the script can't run** (no PowerShell / no source repo): fall back to creating `AGENTS.md` at the project root directly, using the source repo's 18 ground rules + personal style; create the rest one by one likewise.
 
-5. **回報**:列出新增 / 跳過的檔案,並提醒重大改動前先給選項讓使用者拍板(AGENTS.md Rule 16)。
+5. **Report**: list added / skipped files, and remind the user to offer options before major changes for sign-off (AGENTS.md Rule 16).

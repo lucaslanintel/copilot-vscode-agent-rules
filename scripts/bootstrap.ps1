@@ -192,13 +192,13 @@ function Install-GlobalPreferences {
 
     Ensure-Directory -Path $CopilotInstructionsRoot
     Copy-Item -LiteralPath $sourceUserInstructions -Destination (Join-Path $CopilotInstructionsRoot 'user-instructions.md') -Force
-    $sourceUserInstructionsEn = Join-Path $RepoRoot 'user-instructions.en.md'
-    if (Test-Path -LiteralPath $sourceUserInstructionsEn) {
-        Copy-Item -LiteralPath $sourceUserInstructionsEn -Destination (Join-Path $CopilotInstructionsRoot 'user-instructions.en.md') -Force
+    $sourceUserInstructionsZh = Join-Path $RepoRoot 'user-instructions.zh-TW.md'
+    if (Test-Path -LiteralPath $sourceUserInstructionsZh) {
+        Copy-Item -LiteralPath $sourceUserInstructionsZh -Destination (Join-Path $CopilotInstructionsRoot 'user-instructions.zh-TW.md') -Force
     }
 
     Ensure-Directory -Path $VscodeUserPromptsRoot
-    foreach ($prompt in 'init.prompt.md', 'init.en.prompt.md', 'resume.prompt.md', 'resume.en.prompt.md') {
+    foreach ($prompt in 'init.prompt.md', 'init.zh-TW.prompt.md', 'resume.prompt.md', 'resume.zh-TW.prompt.md') {
         $promptSource = Join-Path $RepoRoot ".github\prompts\$prompt"
         if (Test-Path -LiteralPath $promptSource) {
             Copy-Item -LiteralPath $promptSource -Destination (Join-Path $VscodeUserPromptsRoot $prompt) -Force
@@ -224,13 +224,13 @@ function Install-ProjectBootstrap {
     Ensure-Directory -Path $ProjectRoot
 
     $files = @(
-        @{ Source = (Join-Path $RepoRoot 'AGENTS.en.md'); Destination = (Join-Path $ProjectRoot 'AGENTS.en.md') },
+        @{ Source = (Join-Path $RepoRoot 'AGENTS.zh-TW.md'); Destination = (Join-Path $ProjectRoot 'AGENTS.zh-TW.md') },
         @{ Source = (Join-Path $RepoRoot '.github\prompts\resume.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\resume.prompt.md') },
-        @{ Source = (Join-Path $RepoRoot '.github\prompts\resume.en.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\resume.en.prompt.md') },
+        @{ Source = (Join-Path $RepoRoot '.github\prompts\resume.zh-TW.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\resume.zh-TW.prompt.md') },
         @{ Source = (Join-Path $RepoRoot '.github\prompts\init.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\init.prompt.md') },
-        @{ Source = (Join-Path $RepoRoot '.github\prompts\init.en.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\init.en.prompt.md') },
+        @{ Source = (Join-Path $RepoRoot '.github\prompts\init.zh-TW.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\init.zh-TW.prompt.md') },
         @{ Source = (Join-Path $RepoRoot '.github\instructions\guardrails.instructions.md'); Destination = (Join-Path $ProjectRoot '.github\instructions\guardrails.instructions.md') },
-        @{ Source = (Join-Path $RepoRoot '.github\instructions\guardrails.instructions.en.md'); Destination = (Join-Path $ProjectRoot '.github\instructions\guardrails.instructions.en.md') },
+        @{ Source = (Join-Path $RepoRoot '.github\instructions\guardrails.zh-TW.instructions.md'); Destination = (Join-Path $ProjectRoot '.github\instructions\guardrails.zh-TW.instructions.md') },
         @{ Source = (Join-Path $RepoRoot '.github\hooks\high-risk-guard.json'); Destination = (Join-Path $ProjectRoot '.github\hooks\high-risk-guard.json') },
         @{ Source = (Join-Path $RepoRoot '.github\hooks\context-handoff.json'); Destination = (Join-Path $ProjectRoot '.github\hooks\context-handoff.json') },
         @{ Source = (Join-Path $RepoRoot '.github\hooks\scripts\high_risk_guard.py'); Destination = (Join-Path $ProjectRoot '.github\hooks\scripts\high_risk_guard.py') },

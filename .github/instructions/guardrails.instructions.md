@@ -1,44 +1,44 @@
 ---
-description: 護欄分層手冊(工具無關精華)— 高風險操作該用機器強制,不要只寫成散文規則
+description: Layered guardrails handbook (tool-agnostic essence) — high-risk operations should be machine-enforced, not just written as prose rules
 ---
 
-# 護欄分層(Guardrails)
+# Guardrails (layered)
 
-> 語言:**繁體中文** | [English](guardrails.instructions.en.md)
+> Language: **English** | [繁體中文](guardrails.zh-TW.instructions.md)
 
-> 對應 `AGENTS.md` 的 Rule 17。核心問題:**寫在規則文件裡的規定,AI 讀了仍會在關鍵時刻無視**。
-> 核心答案:**按「違反的代價」把規則放到對的約束層;高風險一律機器強制**。
-> 這份是方法論參考;實際的機器強制(hook / CI / guard)是另一步。
+> Maps to `AGENTS.md` Rule 17. Core problem: **rules written in a doc still get ignored by AI at the critical moment.**
+> Core answer: **put each rule at the right constraint layer by "cost of violation"; high-risk is always machine-enforced.**
+> This is a methodology reference; the actual machine enforcement (hook / CI / guard) is a separate step.
 
-## 三層約束力
+## Three layers of enforcement
 
-| 層 | 形式 | 約束力 | 適用 |
+| Layer | Form | Strength | Use for |
 |---|---|---|---|
-| **1. 機器強制** | PreToolUse hook、permission deny/ask、程式內 guard、測試、CI gate、`.gitignore` | **擋得住**(不靠 AI 注意力) | 違反代價高 / 不可逆:清資料、推遠端、刪檔、洩漏機密、打外部 API |
-| **2. 流程 / 檢查表** | 多步驟工作流、TODO 待辦化、計劃執行 | 中 | TDD、計劃執行、驗收 |
-| **3. 散文規則** | AGENTS.md / instructions 文件、口頭叮嚀 | 弱(建議性) | 習慣與風格:語言、commit 格式、目錄慣例 |
+| **1. Machine-enforced** | PreToolUse hook, permission deny/ask, in-code guard, tests, CI gate, `.gitignore` | **Holds** (no AI attention needed) | High / irreversible cost: wiping data, pushing remote, deleting files, leaking secrets, hitting external APIs |
+| **2. Process / checklist** | multi-step workflow, TODO-ization, plan execution | Medium | TDD, plan execution, verification |
+| **3. Prose rules** | AGENTS.md / instructions docs, verbal reminders | Weak (advisory) | Habits & style: language, commit format, directory conventions |
 
-**分流一句話**:違反了「頂多重做一下」→ 放散文規則;違反了「資料沒了 / 推上遠端 / 機密外洩」→ 不要靠文件,寫成 hook / guard / 測試。
+**One-line triage**: violation costs "redo at worst" → prose rule; violation costs "data gone / pushed remote / secret leaked" → don't trust the doc, write a hook / guard / test.
 
-## 設計原則
-1. **對準真實事故類型**,不求包山包海(發生過那類才蓋護欄;太吵會被關掉)。
-2. **故障 fail-open、風險 ask/deny**(hook 自身出錯應靜默放行,別卡死所有指令)。
-3. **堵繞道**(攔了一條路徑要想到替代路徑能跑同一危險操作)。
-4. **留稽核痕跡**(hook 寫一行 log;之後能機器驗證護欄真的在跑)。
-5. **上線前先離線餵假輸入測判定,再實彈跑無害指令查 log**。
-6. **平台健壯性**(輸出純 ASCII JSON 免編碼雷;路徑含空白加引號)。
-7. **日常路徑零摩擦**(安全的高頻操作靜默放行,否則護欄因煩人被拆)。
+## Design principles
+1. **Target real incident types**, don't try to cover everything (gate what has actually happened; too noisy gets disabled).
+2. **Fail-open on faults, ask/deny on risk** (a hook's own error should silently allow, not block all commands).
+3. **Block the bypass** (when blocking one path, consider alternate paths that run the same dangerous op).
+4. **Leave an audit trail** (hook writes one log line; later you can machine-verify the guard runs).
+5. **Before go-live, feed fake input offline to test the decision, then run a harmless live command and check the log.**
+6. **Platform robustness** (output pure-ASCII JSON to avoid encoding traps; quote paths with spaces).
+7. **Zero friction on routine paths** (silently allow safe high-frequency ops, or the guard gets removed for being annoying).
 
-## 移植到新專案的 checklist
-1. 列出本專案「違反代價高」的操作(清 / 覆寫真實資料、推遠端、刪檔、碰機密、打外部服務)。
-2. 破壞性測試一律程式內 opt-in(module-level guard,環境變數才放行)。
-3. 掛 PreToolUse hook 攔危險指令(下方「在 Copilot / VS Code 落地」)。
-4. 要求 AI 對關鍵改動出示獨立驗證(grep 檔案內容、`git status`、`git show --stat`、跑測試)。
-5. 規則文件只放習慣類,並保持精簡;高風險規則問自己「能不能寫成 hook / guard / 測試?」能就寫成那個。
-6. 驗收護欄本身:離線樣本測 → 實彈跑無害指令 → 查稽核 log。沒這步,你只是「相信」它在跑。
+## Porting checklist to a new project
+1. List this project's "high cost of violation" ops (wipe / overwrite real data, push remote, delete files, touch secrets, hit external services).
+2. Make destructive tests opt-in in-code (module-level guard, only allowed via env var).
+3. Add a PreToolUse hook to intercept dangerous commands ("Landing in Copilot / VS Code" below).
+4. Require the AI to show independent verification for key changes (grep file contents, `git status`, `git show --stat`, run tests).
+5. Keep rule docs habit-only and lean; for high-risk rules ask "can this be a hook / guard / test?" — if yes, write that.
+6. Verify the guardrail itself: offline sample test → harmless live command → check audit log. Without this you only "believe" it runs.
 
-## 在 Copilot / VS Code 落地(機器強制這一步)
-- Hooks 設定:`.github/hooks/*.json`。
-- 事件:`SessionStart / UserPromptSubmit / PreToolUse / PostToolUse / PreCompact / SubagentStart / SubagentStop / Stop`。
-- I/O:event JSON 走 stdin;stdout 回 JSON;`exit 2` 或 `{"hookSpecificOutput":{"permissionDecision":"deny"}}` 可擋下單一工具呼叫。
-- stdin 取 `tool_name` / `tool_input` 來判斷危險指令。
+## Landing in Copilot / VS Code (the machine-enforcement step)
+- Hook config: `.github/hooks/*.json`.
+- Events: `SessionStart / UserPromptSubmit / PreToolUse / PostToolUse / PreCompact / SubagentStart / SubagentStop / Stop`.
+- I/O: event JSON via stdin; JSON back on stdout; `exit 2` or `{"hookSpecificOutput":{"permissionDecision":"deny"}}` blocks a single tool call.
+- Read `tool_name` / `tool_input` from stdin to judge dangerous commands.
