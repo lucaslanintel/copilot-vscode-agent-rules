@@ -2,6 +2,9 @@
 *.log
 .github/hooks/*.log
 
+# bootstrap 套用時的暫存備份
+*.bak-*
+
 # Python
 __pycache__/
 *.pyc
