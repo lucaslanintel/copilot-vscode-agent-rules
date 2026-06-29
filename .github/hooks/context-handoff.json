@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": "python \".github/hooks/scripts/handoff_reminder.py\"",
+        "windows": "python \".github/hooks/scripts/handoff_reminder.py\"",
+        "osx": "python3 \".github/hooks/scripts/handoff_reminder.py\"",
+        "linux": "python3 \".github/hooks/scripts/handoff_reminder.py\"",
+        "timeout": 10
+      }
+    ]
+  }
+}

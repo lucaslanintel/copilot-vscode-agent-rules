@@ -1,0 +1,11 @@
+# hook 稽核 log(執行時才產生,不進版控)
+*.log
+.github/hooks/*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / 編輯器
+.DS_Store
+Thumbs.db
