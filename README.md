@@ -12,14 +12,14 @@ Packs a set of engineering ground rules, personal preferences, `/resume` handoff
 After install you get global `/init`: just type `/init` in any new project's Chat to apply the rules — no manual step needed. The install asks for consent before touching your machine (type `y`); add `-Force` for fully unattended install.
 
 ```powershell
-# needs git + gh (private repo); already logged in to gh
-$d="$HOME\copilot-vscode-agent-rules"; gh repo clone lucaslanintel/copilot-vscode-agent-rules $d; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
+# pure-remote one-liner: install everything (no clone, no gh login needed)
+iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 | iex
 ```
 
-Once the repo is public, a pure-remote one-liner works too:
+Prefer to clone first (needs git + gh):
 
 ```powershell
-iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 | iex
+$d="$HOME\copilot-vscode-agent-rules"; gh repo clone lucaslanintel/copilot-vscode-agent-rules $d; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
 ```
 
 ### After clone (manual)
