@@ -220,7 +220,6 @@ function Install-ProjectBootstrap {
     Ensure-Directory -Path $ProjectRoot
 
     $files = @(
-        @{ Source = (Join-Path $RepoRoot 'AGENTS.md'); Destination = (Join-Path $ProjectRoot 'AGENTS.md') },
         @{ Source = (Join-Path $RepoRoot '.github\prompts\resume.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\resume.prompt.md') },
         @{ Source = (Join-Path $RepoRoot '.github\prompts\init.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\init.prompt.md') },
         @{ Source = (Join-Path $RepoRoot '.github\instructions\guardrails.instructions.md'); Destination = (Join-Path $ProjectRoot '.github\instructions\guardrails.instructions.md') },
@@ -236,6 +235,31 @@ function Install-ProjectBootstrap {
         }
 
         [void](Copy-TemplateFile -Source $pair.Source -Destination $pair.Destination -OverwriteExisting:($Force -or -not (Test-Path -LiteralPath $pair.Destination)))
+    }
+
+    # AGENTS.md:不存在 → 直接放;已存在 → 不蓋掉,改在尾端「附加」一段帶標記的規範區塊(可重跑、不重複)
+    $agentsSource = Join-Path $RepoRoot 'AGENTS.md'
+    $agentsDest = Join-Path $ProjectRoot 'AGENTS.md'
+    $agentsAction = 'skipped'
+    if (-not (Test-Path -LiteralPath $agentsDest)) {
+        [void](Copy-TemplateFile -Source $agentsSource -Destination $agentsDest -OverwriteExisting)
+        $agentsAction = 'created'
+    }
+    elseif ($Force) {
+        [void](Copy-TemplateFile -Source $agentsSource -Destination $agentsDest -OverwriteExisting)
+        $agentsAction = 'overwritten'
+    }
+    else {
+        $markerStart = '<!-- copilot-agent-rules:start -->'
+        $markerEnd = '<!-- copilot-agent-rules:end -->'
+        $current = Get-Content -LiteralPath $agentsDest -Raw
+        if ($current -notmatch [regex]::Escape($markerStart)) {
+            [void](Backup-File -Path $agentsDest)
+            $rules = Get-Content -LiteralPath $agentsSource -Raw
+            $block = "`n`n$markerStart`n`n$rules`n`n$markerEnd`n"
+            [System.IO.File]::AppendAllText($agentsDest, $block, [System.Text.UTF8Encoding]::new($false))
+            $agentsAction = 'appended'
+        }
     }
 
     $architecturePath = Join-Path $ProjectRoot 'docs\architecture.md'
@@ -282,6 +306,7 @@ function Install-ProjectBootstrap {
         ProjectRoot = $ProjectRoot
         ArchitecturePath = $architecturePath
         HandoffPath = $handoffPath
+        AgentsMd = $agentsAction
     }
 }
 
