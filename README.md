@@ -6,6 +6,22 @@
 
 ## 一鍵安裝
 
+### 全新電腦(零前置一行指令)
+裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。
+
+```powershell
+# 需 git + gh(私有 repo);已登入 gh
+$d="$HOME\copilot-vscode-agent-rules"; gh repo clone lucaslanintel/copilot-vscode-agent-rules $d; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
+```
+
+repo 設為 public 後可改純遠端:
+
+```powershell
+iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 | iex
+```
+
+### 已 clone 後手動
+
 clone 這個 repo 後,在 repo 根目錄執行:
 
 ```powershell
