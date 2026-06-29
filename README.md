@@ -36,7 +36,7 @@ pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode All -TargetPath
 | `.github/hooks/context-handoff.json` + `scripts/handoff_reminder.py` | **每個專案的 `.github/hooks/`** | **PreCompact 交接提醒**:context 快滿要被壓縮時,提醒寫 `HANDOFF` + `/resume`。 |
 
 ### 全域偏好怎麼安裝
-`bootstrap.ps1 -Mode Global` 會把 [user-instructions.md](user-instructions.md) 複製到 `~/.copilot/instructions`,並更新 VS Code 設定。也可手動:Command Palette → **Chat: New Instructions File** → 選 **New Instructions (User)** 貼上,開 **Settings Sync** 勾 *Prompts and Instructions* 跨機同步。
+`bootstrap.ps1 -Mode Global` 會把 [user-instructions.md](user-instructions.md) 複製到 `~/.copilot/instructions`、把 `/init` 與 `/resume` 複製到 VS Code 使用者 prompts 目錄(全域生效,**任何新專案都能直接喊 `/init`**),並更新 VS Code 設定。也可手動:Command Palette → **Chat: New Instructions File** → 選 **New Instructions (User)** 貼上,開 **Settings Sync** 勾 *Prompts and Instructions* 跨機同步。
 
 ---
 

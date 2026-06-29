@@ -11,6 +11,8 @@ param(
 
     [string]$VscodeSettingsPath = $(if ($env:APPDATA) { Join-Path $env:APPDATA 'Code\User\settings.json' } else { Join-Path $HOME 'AppData\Roaming\Code\User\settings.json' }),
 
+    [string]$VscodeUserPromptsRoot = $(if ($env:APPDATA) { Join-Path $env:APPDATA 'Code\User\prompts' } else { Join-Path $HOME 'AppData\Roaming\Code\User\prompts' }),
+
     [switch]$Force
 )
 
@@ -191,6 +193,14 @@ function Install-GlobalPreferences {
     Ensure-Directory -Path $CopilotInstructionsRoot
     Copy-Item -LiteralPath $sourceUserInstructions -Destination (Join-Path $CopilotInstructionsRoot 'user-instructions.md') -Force
 
+    Ensure-Directory -Path $VscodeUserPromptsRoot
+    foreach ($prompt in 'init.prompt.md', 'resume.prompt.md') {
+        $promptSource = Join-Path $RepoRoot ".github\prompts\$prompt"
+        if (Test-Path -LiteralPath $promptSource) {
+            Copy-Item -LiteralPath $promptSource -Destination (Join-Path $VscodeUserPromptsRoot $prompt) -Force
+        }
+    }
+
     Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useAgentsMdFile' -ValueExpression 'true'
     Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useNestedAgentsMdFiles' -ValueExpression 'true'
     Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.promptFilesLocations' -ValueExpression '{ ".github/prompts": true }'
@@ -200,6 +210,7 @@ function Install-GlobalPreferences {
     [pscustomobject]@{
         CopilotInstructionsPath = (Join-Path $CopilotInstructionsRoot 'user-instructions.md')
         VscodeSettingsPath = $VscodeSettingsPath
+        VscodeUserPromptsRoot = $VscodeUserPromptsRoot
     }
 }
 
