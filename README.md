@@ -1,120 +1,120 @@
-# VS Code + GitHub Copilot 規範一鍵安裝包
+# VS Code + GitHub Copilot Rules — One-Click Installer
 
-> 語言:**繁體中文** | [English](README.en.md)
+> Language: **English** | [繁體中文](README.zh-TW.md)
 
-把一套工程鐵則、個人偏好、`/resume` 交接、護欄 hook 打包成 **AGENTS.md 通用優先** 格式,給 **VS Code + GitHub Copilot** 用。在任何一台電腦 clone 後執行 bootstrap 腳本即可一鍵套用。所有 schema 依官方文件查證(連結見最後)。
+Packs a set of engineering ground rules, personal preferences, `/resume` handoff, and guardrail hooks into an **AGENTS.md universal-first** format for **VS Code + GitHub Copilot**. Clone on any machine and run the bootstrap script to apply everything in one click. Every schema is verified against the official docs (links at the end).
 
 ---
 
-## 一鍵安裝
+## One-Click Install
 
-### 全新電腦(零前置一行指令)
-裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。安裝過程會先問你是否套用到本機(輸入 `y` 同意);要全自動免互動就加 `-Force`。
+### Brand-new machine (zero-setup one-liner)
+After install you get global `/init`: just type `/init` in any new project's Chat to apply the rules — no manual step needed. The install asks for consent before touching your machine (type `y`); add `-Force` for fully unattended install.
 
 ```powershell
-# 需 git + gh(私有 repo);已登入 gh
+# needs git + gh (private repo); already logged in to gh
 $d="$HOME\copilot-vscode-agent-rules"; gh repo clone lucaslanintel/copilot-vscode-agent-rules $d; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
 ```
 
-repo 設為 public 後可改純遠端:
+Once the repo is public, a pure-remote one-liner works too:
 
 ```powershell
 iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 | iex
 ```
 
-### 已 clone 後手動
+### After clone (manual)
 
-clone 這個 repo 後,在 repo 根目錄執行:
+Clone this repo, then from the repo root run:
 
 ```powershell
-# 全域:安裝使用者層偏好 + 開啟 VS Code Copilot 設定
+# Global: install user-level preferences + enable VS Code Copilot settings
 pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode Global
 
-# 套到某個專案:建立該專案的 AGENTS.md / prompts / hooks / instructions / docs
+# Apply to a project: create that project's AGENTS.md / prompts / hooks / instructions / docs
 pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode Project -TargetPath C:\path\to\new-project
 
-# 兩者都做
+# Both
 pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode All -TargetPath C:\path\to\new-project
 ```
 
-全域安裝(`-Mode Global`/`All`)會先詢問是否套用到本機(輸入 `y` 確認);加 `-Force` 可略過詢問全自動安裝。先預覽不動手:加 `-WhatIf`。覆寫既有檔(會自動備份 `.bak-時間戳`):同樣加 `-Force`。
+Global install (`-Mode Global`/`All`) asks for consent before applying to your machine (type `y`); add `-Force` to skip the prompt and install unattended. Preview without changes: add `-WhatIf`. Overwrite existing files (auto-backup to `.bak-<timestamp>`): also add `-Force`.
 
 ---
 
-## 檔案與放置位置
+## Files and Where They Go
 
-| 檔案 | 放哪 | 說明 |
+| File | Location | Notes |
 |---|---|---|
-| `AGENTS.md` | **每個專案根目錄** | 18 條工程鐵則 + 個人工作風格。VS Code Copilot 自動偵測根目錄 `AGENTS.md`。子目錄可放更專屬的覆寫(就近者優先)。 |
-| `user-instructions.md` | **VS Code 使用者層**(全域,一次設定) | 跨所有 repo 的個人偏好。安裝方式見下。 |
-| `.github/prompts/resume.prompt.md` | **每個專案的 `.github/prompts/`** | Copilot 的 `/resume`。在 Chat 輸入 `/resume` 觸發。 |
-| `.github/prompts/init.prompt.md` | **每個專案的 `.github/prompts/`** | Copilot 的 `/init`。在新專案 Chat 輸入 `/init` 把規範套進來(免開終端機)。 |
-| `.github/instructions/guardrails.instructions.md` | **每個專案的 `.github/instructions/`** | 護欄分層手冊精華。方法論參考。 |
-| `.github/hooks/high-risk-guard.json` + `scripts/high_risk_guard.py` | **每個專案的 `.github/hooks/`** | **PreToolUse 高風險護欄**:危險指令(git push / rm -rf / TRUNCATE / DROP…)直接 `deny`。 |
-| `.github/hooks/context-handoff.json` + `scripts/handoff_reminder.py` | **每個專案的 `.github/hooks/`** | **PreCompact 交接提醒**:context 快滿要被壓縮時,提醒寫 `HANDOFF` + `/resume`。 |
+| `AGENTS.md` | **Each project root** | 18 engineering ground rules + personal style. VS Code Copilot auto-detects the root `AGENTS.md`. Subfolders can add more specific overrides (nearest wins). |
+| `user-instructions.md` | **VS Code user layer** (global, set once) | Personal preferences across all repos. Install steps below. |
+| `.github/prompts/resume.prompt.md` | **Each project's `.github/prompts/`** | Copilot's `/resume`. Trigger by typing `/resume` in Chat. |
+| `.github/prompts/init.prompt.md` | **Each project's `.github/prompts/`** | Copilot's `/init`. Type `/init` in a new project's Chat to apply the rules (no terminal). |
+| `.github/instructions/guardrails.instructions.md` | **Each project's `.github/instructions/`** | Layered-guardrails handbook essence. Methodology reference. |
+| `.github/hooks/high-risk-guard.json` + `scripts/high_risk_guard.py` | **Each project's `.github/hooks/`** | **PreToolUse high-risk guard**: dangerous commands (git push / rm -rf / TRUNCATE / DROP…) are `deny`'d. |
+| `.github/hooks/context-handoff.json` + `scripts/handoff_reminder.py` | **Each project's `.github/hooks/`** | **PreCompact handoff reminder**: when context is nearly full and about to compact, reminds you to write `HANDOFF` + `/resume`. |
 
-### 全域偏好怎麼安裝
-`bootstrap.ps1 -Mode Global` 會把 [user-instructions.md](user-instructions.md) 複製到 `~/.copilot/instructions`、把 `/init` 與 `/resume` 複製到 VS Code 使用者 prompts 目錄(全域生效,**任何新專案都能直接喊 `/init`**),並更新 VS Code 設定。也可手動:Command Palette → **Chat: New Instructions File** → 選 **New Instructions (User)** 貼上,開 **Settings Sync** 勾 *Prompts and Instructions* 跨機同步。
+### How global preferences install
+`bootstrap.ps1 -Mode Global` copies [user-instructions.md](user-instructions.en.md) to `~/.copilot/instructions`, copies `/init` and `/resume` into the VS Code user prompts folder (global, **so any new project can call `/init`**), and updates VS Code settings. You can also do it manually: Command Palette → **Chat: New Instructions File** → choose **New Instructions (User)** and paste, enable **Settings Sync** with *Prompts and Instructions* checked to sync across machines.
 
 ---
 
-## bootstrap 會開的 VS Code 設定(`settings.json`)
+## VS Code settings bootstrap enables (`settings.json`)
 
 ```jsonc
 {
-  // AGENTS.md 支援(通常預設開;確認一下)
+  // AGENTS.md support (usually on by default; confirm)
   "chat.useAgentsMdFile": true,
-  // 子目錄的 AGENTS.md 覆寫(實驗性,monorepo 才需要)
+  // Nested AGENTS.md overrides in subfolders (experimental, monorepo only)
   "chat.useNestedAgentsMdFiles": true,
-  // prompt files(/resume)額外搜尋位置;預設讀 .github/prompts
+  // extra search location for prompt files (/resume); reads .github/prompts by default
   "chat.promptFilesLocations": { ".github/prompts": true },
-  // instructions 額外搜尋位置
+  // extra search location for instructions
   "chat.instructionsFilesLocations": { ".github/instructions": true },
-  // monorepo:從父 repo 根目錄一併讀客製
+  // monorepo: also read customizations from the parent repo root
   "chat.useCustomizationsInParentRepositories": true
 }
 ```
 
-> 路徑專屬規則若要用 `applyTo` glob,放 `.github/instructions/*.instructions.md`,前置 frontmatter `applyTo: '**/*.py'`。本套採 AGENTS.md 單檔通用,故未拆。
+> For path-specific rules using an `applyTo` glob, put them in `.github/instructions/*.instructions.md` with frontmatter `applyTo: '**/*.py'`. This pack uses a single universal AGENTS.md, so it's not split.
 
 ---
 
-## 內容一覽
-- ✅ **18 條工程鐵則 + 個人風格** → `AGENTS.md`(Copilot always-on)。
-- ✅ **`/resume` 交接** → `.github/prompts/resume.prompt.md`。
-- ✅ **全域個人偏好** → 使用者層 instructions。
-- ✅ **機器強制護欄** → `.github/hooks/` 兩支 hook。
+## Contents at a Glance
+- ✅ **18 ground rules + personal style** → `AGENTS.md` (Copilot always-on).
+- ✅ **`/resume` handoff** → `.github/prompts/resume.prompt.md`.
+- ✅ **Global personal preferences** → user-layer instructions.
+- ✅ **Machine-enforced guardrails** → two hooks in `.github/hooks/`.
 
-## 機器強制 hooks
+## Machine-enforced hooks
 
-兩支 hook 放在 `.github/hooks/`,JSON 設定 + Python 腳本。stdin/stdout 走 JSON,`permissionDecision:"deny"` 擋單一工具呼叫,`exit 2` 阻斷。
+Two hooks live in `.github/hooks/`: JSON config + Python script. I/O is JSON via stdin/stdout; `permissionDecision:"deny"` blocks a single tool call, `exit 2` aborts.
 
-**1. 高風險護欄 `high-risk-guard.json`(PreToolUse)**
-- 命中危險樣式(`git push` / `rm -rf` / `--force` / `git reset --hard` / `TRUNCATE` / `DROP TABLE` / `mkfs` / `dd if=` …)→ 回 `permissionDecision:"deny"` 擋下該指令,並寫 `.github/hooks/guard.log` 稽核。
-- 危險樣式在 `scripts/high_risk_guard.py` 頂部的 `DANGEROUS` 清單,**請依各專案實際的高代價操作增刪**。
-- 出錯一律 fail-open(放行),不會卡住日常指令。
+**1. High-risk guard `high-risk-guard.json` (PreToolUse)**
+- Matches dangerous patterns (`git push` / `rm -rf` / `--force` / `git reset --hard` / `TRUNCATE` / `DROP TABLE` / `mkfs` / `dd if=` …) → returns `permissionDecision:"deny"` to block, and writes `.github/hooks/guard.log` for audit.
+- Patterns live in the `DANGEROUS` list at the top of `scripts/high_risk_guard.py` — **add/remove per each project's actual high-cost operations**.
+- On error it fails open (allows), so it won't block routine commands.
 
-**2. context 交接提醒 `context-handoff.json`(PreCompact)**
-- 不自己算 token;改掛 `PreCompact`——它只在 context 真的快滿、即將壓縮時觸發,本身就是最可靠的「context 高」訊號。
-- 觸發時輸出 systemMessage,提醒寫 `.handoffs/HANDOFF.md` + 用 `/resume`。也可改掛 `Stop`,腳本同一支。
+**2. Context handoff reminder `context-handoff.json` (PreCompact)**
+- Doesn't count tokens itself; hooks into `PreCompact` — which fires only when context is genuinely near full and about to compact, the most reliable "context high" signal.
+- On trigger it emits a systemMessage reminding you to write `.handoffs/HANDOFF.md` + use `/resume`. Can also hook into `Stop` with the same script.
 
-**啟用與注意**
-- Hooks 設定放 `.github/hooks/*.json`;腳本用 `python` 呼叫(JSON 含 Windows/osx/linux 三平台:Windows 用 `python`,*nix 用 `python3`),需 Python 3 在 PATH。
-- bootstrap 已把 `.github/hooks/*.log` 與 `*.bak-*` 加進專案 `.gitignore`。
-- **驗收**:離線已測(危險→deny、安全→放行、PreCompact→提醒、JSON 合法);實際在 Copilot agent mode 跑一個無害指令、查 `guard.log` 確認 harness 真的呼叫。
-- 事件全集:`SessionStart / UserPromptSubmit / PreToolUse / PostToolUse / PreCompact / SubagentStart / SubagentStop / Stop`。
+**Enable & notes**
+- Hook config goes in `.github/hooks/*.json`; scripts are invoked via `python` (JSON covers Windows/osx/linux: `python` on Windows, `python3` on *nix), needs Python 3 on PATH.
+- bootstrap already adds `.github/hooks/*.log` and `*.bak-*` to the project `.gitignore`.
+- **Verification**: offline-tested (dangerous→deny, safe→allow, PreCompact→remind, JSON valid); run one harmless command in Copilot agent mode and check `guard.log` to confirm the harness actually calls it.
+- Full event set: `SessionStart / UserPromptSubmit / PreToolUse / PostToolUse / PreCompact / SubagentStart / SubagentStop / Stop`.
 
-## 已知限制(誠實標註)
-- ⚠️ **剩餘 token 倒數**:Copilot **沒有**「自動注入剩餘 token 數」的設定。已用 `context-handoff.json`(PreCompact hook)替代,事件驅動、不必算 token。
-- ⚠️ **壓縮保留**:Copilot 有 `PreCompact` hook,但能否左右摘要內容不確定;AGENTS.md always-on 部分達成同效。
+## Known limitations (honest)
+- ⚠️ **Remaining-token countdown**: Copilot has **no** setting to auto-inject remaining token count. Replaced by `context-handoff.json` (PreCompact hook) — event-driven, no token math.
+- ⚠️ **Compaction retention**: Copilot has a `PreCompact` hook, but whether it can steer summary content is uncertain; the AGENTS.md always-on part partly achieves the same.
 
-## 優先序
-個人(使用者層)> 專案(AGENTS.md / `.github/copilot-instructions.md`)> 組織。
+## Priority
+Personal (user layer) > Project (AGENTS.md / `.github/copilot-instructions.md`) > Org.
 
-## 來源(官方文件)
+## Sources (official docs)
 - VS Code — Custom instructions: https://code.visualstudio.com/docs/agent-customization/custom-instructions
 - VS Code — Prompt files: https://code.visualstudio.com/docs/agent-customization/prompt-files
 - VS Code — Hooks: https://code.visualstudio.com/docs/agent-customization/hooks
-- VS Code — Copilot customization 總覽: https://code.visualstudio.com/docs/copilot/copilot-customization
+- VS Code — Copilot customization overview: https://code.visualstudio.com/docs/copilot/copilot-customization
 - GitHub Docs — Repository custom instructions: https://docs.github.com/copilot/customizing-copilot/adding-custom-instructions-for-github-copilot
-- GitHub Changelog — Coding agent 支援 AGENTS.md: https://github.blog/changelog/2025-08-28-copilot-coding-agent-now-supports-agents-md-custom-instructions/
+- GitHub Changelog — Coding agent supports AGENTS.md: https://github.blog/changelog/2025-08-28-copilot-coding-agent-now-supports-agents-md-custom-instructions/
