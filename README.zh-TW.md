@@ -13,7 +13,7 @@
 
 ```powershell
 # 純遠端一行裝好(免 clone、免 gh 登入)
-iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 | iex
+iex (iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing).Content
 ```
 
 想先 clone 再裝(需 git + gh):

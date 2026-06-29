@@ -1,11 +1,17 @@
+# Supports both direct execution and `iex (iwr ...).Content` remote run.
+# When run remotely, $InstallDir / $Force can be pre-set as env vars:
+#   $env:CVAR_DIR = 'C:\custom\path'; $env:CVAR_FORCE = '1'; iex (iwr ...).Content
 [CmdletBinding()]
 param(
-    [string]$InstallDir = (Join-Path $HOME 'copilot-vscode-agent-rules'),
+    [string]$InstallDir = $(if ($env:CVAR_DIR) { $env:CVAR_DIR } else { Join-Path $HOME 'copilot-vscode-agent-rules' }),
     [string]$RepoUrl = 'https://github.com/lucaslanintel/copilot-vscode-agent-rules.git',
     [switch]$Force
 )
 
 $ErrorActionPreference = 'Stop'
+
+# When invoked via iex the param block still applies; resolve Force from env if needed.
+if (-not $Force -and $env:CVAR_FORCE -eq '1') { $Force = $true }
 
 function Test-Cmd { param([string]$Name) [bool](Get-Command $Name -ErrorAction SilentlyContinue) }
 

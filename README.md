@@ -13,7 +13,7 @@ After install you get global `/init`: just type `/init` in any new project's Cha
 
 ```powershell
 # pure-remote one-liner: install everything (no clone, no gh login needed)
-iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 | iex
+iex (iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing).Content
 ```
 
 Prefer to clone first (needs git + gh):
