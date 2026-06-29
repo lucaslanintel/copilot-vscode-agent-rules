@@ -288,7 +288,19 @@ function Install-ProjectBootstrap {
 $results = [System.Collections.Generic.List[object]]::new()
 
 if ($Mode -in @('Global', 'All')) {
-    if ($PSCmdlet.ShouldProcess($VscodeSettingsPath, 'Install global preferences')) {
+    $proceedGlobal = $Force
+    if (-not $proceedGlobal) {
+        Write-Host '即將安裝「全域偏好」,會修改本機 VS Code 使用者設定與 prompts:'
+        Write-Host "  settings: $VscodeSettingsPath"
+        Write-Host "  prompts : $VscodeUserPromptsRoot"
+        Write-Host "  copilot : $CopilotInstructionsRoot"
+        $answer = Read-Host '確定要套用到本機嗎?(y/N)'
+        $proceedGlobal = $answer -match '^(y|yes)$'
+    }
+    if (-not $proceedGlobal) {
+        Write-Host '已略過全域偏好安裝。'
+    }
+    elseif ($PSCmdlet.ShouldProcess($VscodeSettingsPath, 'Install global preferences')) {
         $results.Add((Install-GlobalPreferences))
     }
 }

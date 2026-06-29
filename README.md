@@ -7,7 +7,7 @@
 ## 一鍵安裝
 
 ### 全新電腦(零前置一行指令)
-裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。
+裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。安裝過程會先問你是否套用到本機(輸入 `y` 同意);要全自動免互動就加 `-Force`。
 
 ```powershell
 # 需 git + gh(私有 repo);已登入 gh
@@ -35,7 +35,7 @@ pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode Project -Target
 pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode All -TargetPath C:\path\to\new-project
 ```
 
-先預覽不動手:加 `-WhatIf`。覆寫既有檔(會自動備份 `.bak-時間戳`):加 `-Force`。
+全域安裝(`-Mode Global`/`All`)會先詢問是否套用到本機(輸入 `y` 確認);加 `-Force` 可略過詢問全自動安裝。先預覽不動手:加 `-WhatIf`。覆寫既有檔(會自動備份 `.bak-時間戳`):同樣加 `-Force`。
 
 ---
 
