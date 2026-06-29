@@ -28,9 +28,9 @@ if (Test-Path (Join-Path $InstallDir '.git')) {
 $bootstrap = Join-Path $InstallDir 'scripts\bootstrap.ps1'
 if (-not (Test-Path $bootstrap)) { throw "找不到 bootstrap: $bootstrap" }
 
-$args = @('-Mode', 'Global')
-if ($Force) { $args += '-Force' }
-& $bootstrap @args
+$bsArgs = @('-Mode', 'Global')
+if ($Force) { $bsArgs += '-Force' }
+& $bootstrap @bsArgs
 
 Write-Host ''
 Write-Host '完成:全域偏好已安裝,新專案 Chat 直接喊 /init 即可套規範。'
