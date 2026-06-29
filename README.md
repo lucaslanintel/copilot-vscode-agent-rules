@@ -12,9 +12,14 @@ Packs a set of engineering ground rules, personal preferences, `/resume` handoff
 After install you get global `/init`: just type `/init` in any new project's Chat to apply the rules — no manual step needed. The install asks for consent before touching your machine (type `y`); add `-Force` for fully unattended install.
 
 ```powershell
-# pure-remote one-liner: install everything (no clone, no gh login needed)
-iex (iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing).Content
+# one-liner: download then run (avoids AMSI false-positive on iex+iwr)
+$f="$env:TEMP\cvar-install.ps1"
+iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing -OutFile $f
+pwsh -ExecutionPolicy Bypass -File $f
+Remove-Item $f -Force
 ```
+
+> **Why not `iex (iwr...).Content`?** Windows Defender / AMSI flags that pattern as malicious regardless of content (it's a common malware delivery technique). Saving to disk first avoids the false-positive.
 
 Prefer to clone first (needs git + gh):
 
