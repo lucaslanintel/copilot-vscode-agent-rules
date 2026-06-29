@@ -6,6 +6,8 @@ argument-hint: [可選:規範來源 repo 路徑,例如 C:\path\to\copilot-vscode
 
 你要把這套 VS Code + Copilot 規範安裝到「目前開啟的專案」根目錄。目標:讓專案具備 AGENTS.md、`/resume`、護欄 hook 與架構文件。
 
+> 語言:**繁體中文** | English: `/init.en`
+
 ## 步驟
 
 1. **找規範來源 repo**(含 `scripts/bootstrap.ps1`),依序:

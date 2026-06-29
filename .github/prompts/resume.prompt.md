@@ -6,6 +6,8 @@ argument-hint: [可選:額外指示,例如「先跑測試」]
 
 你要從上一個對話 / session 留下的交接檔接手,繼續未完成的工作。嚴格遵守本專案 `AGENTS.md` 與 `docs/architecture.md` 的架構規範。
 
+> 語言:**繁體中文** | English: `/resume.en`
+
 ## 步驟
 
 1. **找交接檔**,依序取第一個存在的:

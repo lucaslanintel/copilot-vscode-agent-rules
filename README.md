@@ -1,5 +1,7 @@
 # VS Code + GitHub Copilot 規範一鍵安裝包
 
+> 語言:**繁體中文** | [English](README.en.md)
+
 把一套工程鐵則、個人偏好、`/resume` 交接、護欄 hook 打包成 **AGENTS.md 通用優先** 格式,給 **VS Code + GitHub Copilot** 用。在任何一台電腦 clone 後執行 bootstrap 腳本即可一鍵套用。所有 schema 依官方文件查證(連結見最後)。
 
 ---

@@ -4,6 +4,8 @@
 > 安裝為 **VS Code 使用者層 instructions**(見 README),這樣不必每個 repo 複製就全域生效。
 > 每個專案專屬的規則放各 repo 的 `AGENTS.md`;此檔只放跨專案的個人風格。
 
+> 語言:**繁體中文** | [English](user-instructions.en.md)
+
 ## 溝通
 - 一律用**繁體中文**回答與寫 commit message。
 - 做決策前先給我**選項 + 取捨**讓我拍板,不要默默選一個。
