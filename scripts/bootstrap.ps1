@@ -102,7 +102,8 @@ function Ensure-JsoncSetting {
     for ($index = 0; $index -lt $lines.Count; $index++) {
         if ($lines[$index] -match $pattern) {
             $indent = [regex]::Match($lines[$index], '^\s*').Value
-            $lines[$index] = '{0}"{1}": {2}' -f $indent, $Key, $ValueExpression
+            $comma = if ($lines[$index].TrimEnd().EndsWith(',')) { ',' } else { '' }
+            $lines[$index] = '{0}"{1}": {2}{3}' -f $indent, $Key, $ValueExpression, $comma
             [System.IO.File]::WriteAllLines($Path, [string[]]$lines, [System.Text.UTF8Encoding]::new($false))
             return
         }
@@ -190,11 +191,11 @@ function Install-GlobalPreferences {
     Ensure-Directory -Path $CopilotInstructionsRoot
     Copy-Item -LiteralPath $sourceUserInstructions -Destination (Join-Path $CopilotInstructionsRoot 'user-instructions.md') -Force
 
-    Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useAgentsMdFile' -ValueExpression '$true'
-    Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useNestedAgentsMdFiles' -ValueExpression '$true'
+    Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useAgentsMdFile' -ValueExpression 'true'
+    Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useNestedAgentsMdFiles' -ValueExpression 'true'
     Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.promptFilesLocations' -ValueExpression '{ ".github/prompts": true }'
     Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.instructionsFilesLocations' -ValueExpression '{ ".github/instructions": true }'
-    Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useCustomizationsInParentRepositories' -ValueExpression '$true'
+    Ensure-JsoncSetting -Path $VscodeSettingsPath -Key 'chat.useCustomizationsInParentRepositories' -ValueExpression 'true'
 
     [pscustomobject]@{
         CopilotInstructionsPath = (Join-Path $CopilotInstructionsRoot 'user-instructions.md')
