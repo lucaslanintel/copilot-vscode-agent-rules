@@ -28,8 +28,8 @@ if (Test-Path (Join-Path $InstallDir '.git')) {
 $bootstrap = Join-Path $InstallDir 'scripts\bootstrap.ps1'
 if (-not (Test-Path $bootstrap)) { throw "找不到 bootstrap: $bootstrap" }
 
-$bsArgs = @('-Mode', 'Global')
-if ($Force) { $bsArgs += '-Force' }
+$bsArgs = @{ Mode = 'Global' }
+if ($Force) { $bsArgs.Force = $true }
 & $bootstrap @bsArgs
 
 Write-Host ''
