@@ -12,14 +12,20 @@
 裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。安裝過程會先問你是否套用到本機(輸入 `y` 同意);要全自動免互動就加 `-Force`。
 
 ```powershell
-# 純遠端安裝(先下載再執行,避免 AMSI 誤判)
+# 需 Node.js（VS Code 內建；若未加入 PATH 請手動新增）
+npx github:lucaslanintel/copilot-vscode-agent-rules
+```
+
+Node.js 不在 PATH？用 PowerShell 備用流：
+
+```powershell
 $f="$env:TEMP\cvar-install.ps1"
 iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing -OutFile $f
 pwsh -ExecutionPolicy Bypass -File $f
 Remove-Item $f -Force
 ```
 
-> **為什麼不用 `iex (iwr...).Content`?** Windows Defender / AMSI 會把這個模式判定為惡意(不管內容),先存檔再執行可避免誤判。
+> **為什麼用 `npx` 而不用 `iex (iwr...).Content`？** Windows Defender / AMSI 會把 `iex+iwr` 模式視為惡意（不管內容）；`npx` 不會被擋下。
 
 想先 clone 再裝(需 git + gh):
 
