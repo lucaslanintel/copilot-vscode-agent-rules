@@ -211,6 +211,7 @@ function Install-ProjectBootstrap {
     $files = @(
         @{ Source = (Join-Path $RepoRoot 'AGENTS.md'); Destination = (Join-Path $ProjectRoot 'AGENTS.md') },
         @{ Source = (Join-Path $RepoRoot '.github\prompts\resume.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\resume.prompt.md') },
+        @{ Source = (Join-Path $RepoRoot '.github\prompts\init.prompt.md'); Destination = (Join-Path $ProjectRoot '.github\prompts\init.prompt.md') },
         @{ Source = (Join-Path $RepoRoot '.github\instructions\guardrails.instructions.md'); Destination = (Join-Path $ProjectRoot '.github\instructions\guardrails.instructions.md') },
         @{ Source = (Join-Path $RepoRoot '.github\hooks\high-risk-guard.json'); Destination = (Join-Path $ProjectRoot '.github\hooks\high-risk-guard.json') },
         @{ Source = (Join-Path $RepoRoot '.github\hooks\context-handoff.json'); Destination = (Join-Path $ProjectRoot '.github\hooks\context-handoff.json') },

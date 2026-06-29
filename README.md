@@ -30,6 +30,7 @@ pwsh -ExecutionPolicy Bypass -File .\scripts\bootstrap.ps1 -Mode All -TargetPath
 | `AGENTS.md` | **每個專案根目錄** | 18 條工程鐵則 + 個人工作風格。VS Code Copilot 自動偵測根目錄 `AGENTS.md`。子目錄可放更專屬的覆寫(就近者優先)。 |
 | `user-instructions.md` | **VS Code 使用者層**(全域,一次設定) | 跨所有 repo 的個人偏好。安裝方式見下。 |
 | `.github/prompts/resume.prompt.md` | **每個專案的 `.github/prompts/`** | Copilot 的 `/resume`。在 Chat 輸入 `/resume` 觸發。 |
+| `.github/prompts/init.prompt.md` | **每個專案的 `.github/prompts/`** | Copilot 的 `/init`。在新專案 Chat 輸入 `/init` 把規範套進來(免開終端機)。 |
 | `.github/instructions/guardrails.instructions.md` | **每個專案的 `.github/instructions/`** | 護欄分層手冊精華。方法論參考。 |
 | `.github/hooks/high-risk-guard.json` + `scripts/high_risk_guard.py` | **每個專案的 `.github/hooks/`** | **PreToolUse 高風險護欄**:危險指令(git push / rm -rf / TRUNCATE / DROP…)直接 `deny`。 |
 | `.github/hooks/context-handoff.json` + `scripts/handoff_reminder.py` | **每個專案的 `.github/hooks/`** | **PreCompact 交接提醒**:context 快滿要被壓縮時,提醒寫 `HANDOFF` + `/resume`。 |
