@@ -7,7 +7,19 @@
 ---
 
 ## 一鍵安裝
+### 環境需求
 
+| 項目 | 版本 | 說明 |
+|---|---|---|
+| **Windows** | 10 / 11 | 腳本為 Windows 專用 |
+| **VS Code** | ≥ 1.90 | 需已安裝 GitHub Copilot 擴充套件 |
+| **GitHub Copilot** | 任意 | 需 Chat 模式（`/init`、`/resume`） |
+| **PowerShell** | 7+（`pwsh`）建議，5.1 可用 | Win 11 內建；[pwsh 7 安裝](https://github.com/PowerShell/PowerShell) |
+| **Node.js** | ≥ 14 | 僅 `npx` 流需要——VS Code 內建 Node 但可能不在 PATH |
+| **git** | 任意 | clone 安裝流需要（`gh` 可選） |
+
+> **`npx` 最低限度**：Node.js 在 PATH + pwsh/powershell + VS Code 已開 Copilot。
+> **PS1 最低限度**：pwsh/powershell + VS Code 已開 Copilot（不需 Node）。
 ### 全新電腦(零前置一行指令)
 裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。安裝過程會先問你是否套用到本機(輸入 `y` 同意);要全自動免互動就加 `-Force`。
 

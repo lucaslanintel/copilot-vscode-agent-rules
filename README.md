@@ -8,6 +8,20 @@ Packs a set of engineering ground rules, personal preferences, `/resume` handoff
 
 ## One-Click Install
 
+### Prerequisites
+
+| Requirement | Version | Notes |
+|---|---|---|
+| **Windows** | 10 / 11 | Scripts are Windows-only (PowerShell) |
+| **VS Code** | ≥ 1.90 | With GitHub Copilot extension enabled |
+| **GitHub Copilot** | any | Chat mode required (`/init`, `/resume`) |
+| **PowerShell** | 7+ (`pwsh`) recommended, 5.1 accepted | Pre-installed on Win 11; [install pwsh 7](https://github.com/PowerShell/PowerShell) |
+| **Node.js** | ≥ 14 | For `npx` install only — VS Code ships Node but it may not be on PATH |
+| **git** | any | Required for clone-based install (`gh` optional) |
+
+> **Minimum for `npx` path**: Node.js on PATH + pwsh/powershell + VS Code with Copilot.
+> **Minimum for PS1 path**: pwsh/powershell + VS Code with Copilot (no Node needed).
+
 ### Brand-new machine (zero-setup one-liner)
 After install you get global `/init`: just type `/init` in any new project's Chat to apply the rules — no manual step needed. The install asks for consent before touching your machine (type `y`); add `-Force` for fully unattended install.
 
