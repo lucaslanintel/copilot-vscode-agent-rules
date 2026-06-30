@@ -23,18 +23,9 @@ Packs a set of engineering ground rules, personal preferences, `/resume` handoff
 > **Minimum for PS1 path**: pwsh/powershell + VS Code with Copilot (no Node needed).
 
 ### Brand-new machine (zero-setup one-liner)
-After install you get global `/init`: just type `/init` in any new project's Chat to apply the rules — no manual step needed. The install asks for consent before touching your machine (type `y`); add `-Force` for fully unattended install.
+After install you get global `/init`: type `/init` in any new project's Chat to apply the rules. Installer asks for consent (type `y`); add `-Force` for unattended install.
 
-Recommended:
-
-```powershell
-$f="$env:TEMP\cvar-install.ps1"
-iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing -OutFile $f
-pwsh -ExecutionPolicy Bypass -File $f
-Remove-Item $f -Force
-```
-
-If you already have Node.js on PATH, you can still use `npx`:
+Quickest path (Node.js already on PATH):
 
 ```powershell
 # requires Node.js (`npx` cannot auto-install Node by itself)
@@ -43,10 +34,10 @@ npx github:lucaslanintel/copilot-vscode-agent-rules
 
 > **Why `npx` instead of `iex (iwr...).Content`?** Windows Defender / AMSI flags the `iex+iwr` pattern as malicious (common malware delivery technique) regardless of actual content. `npx` is not flagged.
 
-Prefer to clone first (needs git + gh):
+No Node.js on PATH? Use clone + PowerShell installer (needs git, `gh` optional):
 
 ```powershell
-$d="$HOME\copilot-vscode-agent-rules"; gh repo clone lucaslanintel/copilot-vscode-agent-rules $d; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
+$d="$HOME\copilot-vscode-agent-rules"; if (Get-Command gh -ErrorAction SilentlyContinue) { gh repo clone lucaslanintel/copilot-vscode-agent-rules $d } else { git clone https://github.com/lucaslanintel/copilot-vscode-agent-rules.git $d }; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
 ```
 
 ### After clone (manual)

@@ -22,18 +22,9 @@
 > **`npx` 最低限度**：Node.js 在 PATH + pwsh/powershell + VS Code 已開 Copilot。
 > **PS1 最低限度**：pwsh/powershell + VS Code 已開 Copilot（不需 Node）。
 ### 全新電腦(零前置一行指令)
-裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。安裝過程會先問你是否套用到本機(輸入 `y` 同意);要全自動免互動就加 `-Force`。
+安裝後會有全域 `/init`,新專案 Chat 輸入 `/init` 就能套規範。安裝時會詢問是否套用到本機(輸入 `y`);要全自動可加 `-Force`。
 
-建議使用:
-
-```powershell
-$f="$env:TEMP\cvar-install.ps1"
-iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing -OutFile $f
-pwsh -ExecutionPolicy Bypass -File $f
-Remove-Item $f -Force
-```
-
-若你已經有 Node.js 且在 PATH,仍可用 `npx`:
+最快路徑(已安裝 Node.js 且在 PATH):
 
 ```powershell
 # 需 Node.js（`npx` 本身無法自動安裝 Node）
@@ -42,10 +33,10 @@ npx github:lucaslanintel/copilot-vscode-agent-rules
 
 > **為什麼用 `npx` 而不用 `iex (iwr...).Content`？** Windows Defender / AMSI 會把 `iex+iwr` 模式視為惡意（不管內容）；`npx` 不會被擋下。
 
-想先 clone 再裝(需 git + gh):
+若沒有 Node.js,用 clone + PowerShell 安裝(需 git,`gh` 可選):
 
 ```powershell
-$d="$HOME\copilot-vscode-agent-rules"; gh repo clone lucaslanintel/copilot-vscode-agent-rules $d; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
+$d="$HOME\copilot-vscode-agent-rules"; if (Get-Command gh -ErrorAction SilentlyContinue) { gh repo clone lucaslanintel/copilot-vscode-agent-rules $d } else { git clone https://github.com/lucaslanintel/copilot-vscode-agent-rules.git $d }; pwsh -ExecutionPolicy Bypass -File "$d\scripts\install.ps1"
 ```
 
 ### 已 clone 後手動
