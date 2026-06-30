@@ -8,21 +8,6 @@ Packs a set of engineering ground rules, personal preferences, `/resume` handoff
 
 ## One-Click Install
 
-### Must do before install
-
-Configure proxy environment variables before running any install command.
-The one-click PowerShell installer now enforces this order:
-
-1. Set proxy variables first.
-2. Auto-install Node.js LTS when missing.
-3. Install `copilot-vscode-agent-rules`.
-
-```cmd
-set HTTPS_PROXY=http://proxy-dmz.intel.com:912
-set HTTP_PROXY=http://proxy-dmz.intel.com:911
-set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8,172.16.0.0/12,134.134.0.0/16
-```
-
 ### Prerequisites
 
 | Requirement | Version | Notes |
@@ -40,22 +25,13 @@ set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127
 ### Brand-new machine (zero-setup one-liner)
 After install you get global `/init`: just type `/init` in any new project's Chat to apply the rules — no manual step needed. The install asks for consent before touching your machine (type `y`); add `-Force` for fully unattended install.
 
-Recommended (proxy-first + Node.js auto-install):
+Recommended:
 
 ```powershell
 $f="$env:TEMP\cvar-install.ps1"
 iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing -OutFile $f
 pwsh -ExecutionPolicy Bypass -File $f
 Remove-Item $f -Force
-```
-
-Need custom proxy values? Pass them explicitly:
-
-```powershell
-pwsh -ExecutionPolicy Bypass -File $f `
-  -HttpsProxy "http://proxy-dmz.intel.com:912" `
-  -HttpProxy "http://proxy-dmz.intel.com:911" `
-  -NoProxy "intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8,172.16.0.0/12,134.134.0.0/16"
 ```
 
 If you already have Node.js on PATH, you can still use `npx`:
