@@ -8,6 +8,18 @@
 
 ## 一鍵安裝
 
+### 安裝前先做
+
+1. 先設定 proxy:
+
+```cmd
+set HTTPS_PROXY=http://proxy-dmz.intel.com:912
+set HTTP_PROXY=http://proxy-dmz.intel.com:911
+set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8,172.16.0.0/12,134.134.0.0/16
+```
+
+2. 先安裝 Node.js,並確認 `node`/`npm` 已在 PATH。
+
 ### 環境需求
 
 | 項目 | 版本 | 說明 |

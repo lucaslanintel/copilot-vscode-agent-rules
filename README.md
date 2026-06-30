@@ -8,6 +8,18 @@ Packs a set of engineering ground rules, personal preferences, `/resume` handoff
 
 ## One-Click Install
 
+### Before you run install
+
+1. Configure proxy first:
+
+```cmd
+set HTTPS_PROXY=http://proxy-dmz.intel.com:912
+set HTTP_PROXY=http://proxy-dmz.intel.com:911
+set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8,172.16.0.0/12,134.134.0.0/16
+```
+
+2. Install Node.js and ensure `node`/`npm` are on PATH.
+
 ### Prerequisites
 
 | Requirement | Version | Notes |
