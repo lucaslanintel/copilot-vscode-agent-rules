@@ -7,6 +7,21 @@
 ---
 
 ## 一鍵安裝
+### 安裝前必做
+
+執行任何安裝指令前,先設定 proxy 環境變數。
+一鍵 PowerShell 安裝流程已強制以下順序:
+
+1. 先設定 proxy。
+2. 若缺少 Node.js 則自動安裝 Node.js LTS。
+3. 再安裝 `copilot-vscode-agent-rules`。
+
+```cmd
+set HTTPS_PROXY=http://proxy-dmz.intel.com:912
+set HTTP_PROXY=http://proxy-dmz.intel.com:911
+set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8,172.16.0.0/12,134.134.0.0/16
+```
+
 ### 環境需求
 
 | 項目 | 版本 | 說明 |
@@ -23,18 +38,29 @@
 ### 全新電腦(零前置一行指令)
 裝完即擁有全域 `/init`,新專案 Chat 直接喊 `/init` 就套規範,不必再手動跑任何東西。安裝過程會先問你是否套用到本機(輸入 `y` 同意);要全自動免互動就加 `-Force`。
 
-```powershell
-# 需 Node.js（VS Code 內建；若未加入 PATH 請手動新增）
-npx github:lucaslanintel/copilot-vscode-agent-rules
-```
-
-Node.js 不在 PATH？用 PowerShell 備用流：
+建議使用(先 proxy + 自動安裝 Node.js):
 
 ```powershell
 $f="$env:TEMP\cvar-install.ps1"
 iwr https://raw.githubusercontent.com/lucaslanintel/copilot-vscode-agent-rules/master/scripts/install.ps1 -UseBasicParsing -OutFile $f
 pwsh -ExecutionPolicy Bypass -File $f
 Remove-Item $f -Force
+```
+
+若要指定 proxy 值,可明確帶入:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File $f `
+  -HttpsProxy "http://proxy-dmz.intel.com:912" `
+  -HttpProxy "http://proxy-dmz.intel.com:911" `
+  -NoProxy "intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8,172.16.0.0/12,134.134.0.0/16"
+```
+
+若你已經有 Node.js 且在 PATH,仍可用 `npx`:
+
+```powershell
+# 需 Node.js（`npx` 本身無法自動安裝 Node）
+npx github:lucaslanintel/copilot-vscode-agent-rules
 ```
 
 > **為什麼用 `npx` 而不用 `iex (iwr...).Content`？** Windows Defender / AMSI 會把 `iex+iwr` 模式視為惡意（不管內容）；`npx` 不會被擋下。
