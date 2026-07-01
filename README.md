@@ -34,7 +34,7 @@ set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127
 > **Minimum for `npx` path**: Node.js on PATH + pwsh/powershell + VS Code with Copilot.
 > **Minimum for PS1 path**: pwsh/powershell + VS Code with Copilot (no Node needed).
 
-### Brand-new machine (zero-setup one-liner)
+### Brand-new machine (zero-setup, one-liner)
 After install you get global `/init`: type `/init` in any new project's Chat to apply the rules. Installer asks for consent (type `y`); add `-Force` for unattended install.
 
 Quickest path (Node.js already on PATH):

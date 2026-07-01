@@ -33,7 +33,7 @@ set NO_PROXY=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127
 
 > **`npx` 最低限度**：Node.js 在 PATH + pwsh/powershell + VS Code 已開 Copilot。
 > **PS1 最低限度**：pwsh/powershell + VS Code 已開 Copilot（不需 Node）。
-### 全新電腦(零前置一行指令)
+### 全新電腦（零前置一行指令）
 安裝後會有全域 `/init`,新專案 Chat 輸入 `/init` 就能套規範。安裝時會詢問是否套用到本機(輸入 `y`);要全自動可加 `-Force`。
 
 最快路徑(已安裝 Node.js 且在 PATH):
