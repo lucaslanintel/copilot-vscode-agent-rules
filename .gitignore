@@ -1,8 +1,8 @@
-# hook 稽核 log(執行時才產生,不進版控)
+# Hook audit logs (generated at runtime; do not track)
 *.log
 .github/hooks/*.log
 
-# bootstrap 套用時的暫存備份
+# Temporary backups created by bootstrap
 *.bak-*
 
 # Python
@@ -12,6 +12,6 @@ __pycache__/
 # Node
 node_modules/
 
-# OS / 編輯器
+# OS / editor
 .DS_Store
 Thumbs.db

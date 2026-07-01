@@ -11,7 +11,7 @@ if (!fs.existsSync(script)) {
   process.exit(1);
 }
 
-// Try pwsh (PowerShell 7+) first, fall back to powershell (Windows PowerShell 5.1)
+// Try pwsh (PowerShell 7+) first, then fall back to powershell (Windows PowerShell 5.1)
 const shells = process.platform === 'win32' ? ['pwsh', 'powershell'] : ['pwsh'];
 const extraArgs = process.argv.slice(2); // forward any CLI args (e.g. --Force)
 

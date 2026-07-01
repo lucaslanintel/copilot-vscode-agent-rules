@@ -1,7 +1,7 @@
 {
   "name": "copilot-vscode-agent-rules",
   "version": "1.0.0",
-  "description": "VS Code + GitHub Copilot engineering rules — one-click installer",
+  "description": "VS Code + GitHub Copilot engineering rules — one-click setup",
   "bin": "./bin/install.js",
   "engines": { "node": ">=14" },
   "keywords": ["vscode", "copilot", "agents", "rules", "engineering"],
