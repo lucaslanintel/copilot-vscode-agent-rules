@@ -4,8 +4,6 @@ description: Layered guardrails handbook (tool-agnostic essence) — high-risk o
 
 # Guardrails (layered)
 
-> Language: **English** | [繁體中文](guardrails.zh-TW.instructions.md)
-
 > Maps to `AGENTS.md` Rule 17. Core problem: **rules written in a doc still get ignored by AI at the critical moment.**
 > Core answer: **put each rule at the right constraint layer by "cost of violation"; high-risk is always machine-enforced.**
 > This is a methodology reference; the actual machine enforcement (hook / CI / guard) is a separate step.

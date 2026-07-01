@@ -4,8 +4,6 @@
 > Install as **VS Code user-layer instructions** (see README) so it applies globally without copying into every repo.
 > Project-specific rules go in each repo's `AGENTS.md`; this file holds only cross-project personal style.
 
-> Language: **English** | [繁體中文](user-instructions.zh-TW.md)
-
 ## Communication
 - Always reply and write commit messages in **Traditional Chinese**.
 - Before deciding, give me **options + trade-offs** to sign off on; don't silently pick one.

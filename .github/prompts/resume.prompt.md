@@ -6,8 +6,6 @@ argument-hint: [optional: extra instructions, e.g. "run tests first"]
 
 You will take over from the handoff file left by the previous conversation / session and continue unfinished work. Strictly follow this project's `AGENTS.md` and `docs/architecture.md` architecture rules.
 
-> Language: **English** | 繁體中文:`/resume.zh-TW`
-
 ## Steps
 
 1. **Find the handoff file**, taking the first that exists:

@@ -4,8 +4,6 @@
 > Place at the **project root**. One per project; subfolders can hold more specific `AGENTS.md` overrides (nearest wins).
 > If it conflicts with the project's existing `docs/architecture.md`, the architecture doc wins.
 
-> Language: **English** | [繁體中文](AGENTS.zh-TW.md)
-
 ---
 
 ## Personal working style (cross-tool)

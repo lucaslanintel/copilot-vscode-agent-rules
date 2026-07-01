@@ -6,8 +6,6 @@ argument-hint: [optional: rules source repo path, e.g. C:\path\to\copilot-vscode
 
 You will install this VS Code + Copilot rules pack into the root of the "currently open project". Goal: give the project AGENTS.md, `/resume`, guardrail hooks, and an architecture doc.
 
-> Language: **English** | 繁體中文:`/init.zh-TW`
-
 ## Steps
 
 1. **Find the source repo** (containing `scripts/bootstrap.ps1`), in order:
